@@ -32,14 +32,15 @@ def main():
     
     conn = psycopg2.connect(database=DB)
     cur = conn.cursor()
-    cur.execute("""SELECT log.path FROM log, articles 
+    cur.execute("""SELECT articles.title, COUNT(log.path) as num FROM log, articles 
     WHERE log.path LIKE '%' || articles.slug || '%'
-    GROUP BY log.path
+    GROUP BY articles.title
+    ORDER BY num DESC
     LIMIT 10
     """)
     output = cur.fetchall()
     for entry in output:
-        print(entry[0])
+        print('Hits:', entry[1], '-- article:', entry[0])
     conn.close()
 
 
