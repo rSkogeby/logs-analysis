@@ -29,18 +29,41 @@ DB = 'news'
 
 
 def main():
-    
+
     conn = psycopg2.connect(database=DB)
     cur = conn.cursor()
-    cur.execute("""SELECT articles.title, COUNT(log.path) as num FROM log, articles 
-    WHERE log.path LIKE '%' || articles.slug || '%'
-    GROUP BY articles.title
-    ORDER BY num DESC
-    LIMIT 10
+    print()
+    
+    """Reports the most popular articles of all times."""
+    print('Most read articles:')    
+    cur.execute("""SELECT articles.title, COUNT(log.path) as num 
+        FROM log, articles 
+        WHERE log.path LIKE '%' || articles.slug || '%'
+        GROUP BY articles.title
+        ORDER BY num DESC
+        LIMIT 3
     """)
     output = cur.fetchall()
     for entry in output:
-        print('Hits:', entry[1], '-- article:', entry[0])
+        print('\"%s\"' % entry[0], '--', entry[1], 'views')
+    print()
+    
+    """Reports the most popular author of all times."""
+    print('Most read authors:')
+    cur.execute("""SELECT authors.name, COUNT(log.path) as num
+        FROM log, articles, authors
+        WHERE log.path LIKE '%' || articles.slug || '%'
+        AND articles.author = authors.id
+        GROUP BY authors.name
+        ORDER BY num DESC
+        LIMIT 3
+    """)
+
+    output = cur.fetchall()
+    for entry in output:
+        print('\"%s\"' % entry[0], '--', entry[1], 'views')
+    
+    
     conn.close()
 
 
