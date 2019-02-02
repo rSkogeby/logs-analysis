@@ -71,24 +71,19 @@ def main():
         SELECT TO_CHAR(log.time::date, 'FMMonth dd, yyyy') AS day,
         log.status as status FROM log;
      
-     SELECT day, total_num
-        FROM date_and_status, (
-            SELECT COUNT(status) AS total_num
-            FROM date_and_status
-            GROUP BY day
-        ) AS subq
-        WHERE status LIKE '%40%'
-        OR status LIKE '%50%'
-        GROUP BY day, total_num
-        LIMIT 10
+     SELECT
+        day,
+        ((COUNT(status) FILTER (WHERE status LIKE '%40%' OR status LIKE '%50%'))::float / (COUNT(status))::float) * 100 AS fail_rate
+        FROM date_and_status
+        GROUP BY day
+        ORDER BY fail_rate DESC
+        LIMIT 5
     """)
 
     output = cur.fetchall()
+    print(output)
     for entry in output:
-        for i in entry:
-            print(i)
-        print()
-        #print('\"%s\"' % entry[0], '--', entry[1], 'views')
+        print('%s' % entry[0], ' -- ', round(float(entry[1]), 2), '% errors', sep='')
     
     conn.close()
 
