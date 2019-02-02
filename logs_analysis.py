@@ -34,35 +34,35 @@ def main():
     cur = conn.cursor()
     print()
     #
-    #"""Reports the most popular articles of all times."""
-    #print('Most read articles:')    
-    #cur.execute("""SELECT articles.title, COUNT(log.path) as num 
-    #    FROM log, articles 
-    #    WHERE log.path LIKE '%' || articles.slug || '%'
-    #    GROUP BY articles.title
-    #    ORDER BY num DESC
-    #    LIMIT 3
-    #""")
-    #output = cur.fetchall()
-    #for entry in output:
-    #    print('\"%s\"' % entry[0], '--', entry[1], 'views')
-    #print()
-    #
-    #"""Reports the most popular author of all times."""
-    #print('Most read authors:')
-    #cur.execute("""SELECT authors.name, COUNT(log.path) as num
-    #    FROM log, articles, authors
-    #    WHERE log.path LIKE '%' || articles.slug || '%'
-    #    AND articles.author = authors.id
-    #    GROUP BY authors.name
-    #    ORDER BY num DESC
-    #    LIMIT 4
-    #""")
-#
-    #output = cur.fetchall()
-    #for entry in output:
-    #    print('\"%s\"' % entry[0], '--', entry[1], 'views')
-    #print()
+    """Reports the most popular articles of all times."""
+    print('Most read articles:')    
+    cur.execute("""SELECT articles.title, COUNT(log.path) as num 
+        FROM log, articles 
+        WHERE log.path LIKE '%' || articles.slug || '%'
+        GROUP BY articles.title
+        ORDER BY num DESC
+        LIMIT 3
+    """)
+    output = cur.fetchall()
+    for entry in output:
+        print('\"%s\"' % entry[0], '\u2014', entry[1], 'views')
+    print()
+    
+    """Reports the most popular author of all times."""
+    print('Most read authors:')
+    cur.execute("""SELECT authors.name, COUNT(log.path) as num
+        FROM log, articles, authors
+        WHERE log.path LIKE '%' || articles.slug || '%'
+        AND articles.author = authors.id
+        GROUP BY authors.name
+        ORDER BY num DESC
+        LIMIT 4
+    """)
+
+    output = cur.fetchall()
+    for entry in output:
+        print('\"%s\"' % entry[0], '\u2014', entry[1], 'views')
+    print()
     
     """Days with more than 1% of requests resulting in errors"""
     print('Errors:')
@@ -102,7 +102,7 @@ def main():
 
     output = cur.fetchall()
     for entry in output:
-        print('%s' % entry[0], ' -- ', round(float(entry[1]), 2), '% errors', sep='')
+        print('%s' % entry[0], ' \u2014 ', round(float(entry[1]), 2), '% errors', sep='')
     
     conn.close()
 
