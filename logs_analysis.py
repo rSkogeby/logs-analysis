@@ -67,21 +67,40 @@ def main():
     """Days with more than 1% of requests resulting in errors"""
     print('Errors:')
   
-    cur.execute("""CREATE VIEW date_and_status AS
-        SELECT TO_CHAR(log.time::date, 'FMMonth dd, yyyy') AS day,
-        log.status as status FROM log;
+    cur.execute("""
      
-     SELECT
+    WITH result AS (
+        WITH date_and_status AS (
+            SELECT
+                TO_CHAR(log.time::date, 'FMMonth dd, yyyy') AS day,
+                log.status as status 
+            FROM 
+                log
+        )
+        
+        SELECT
+            day,
+            ((COUNT(status) FILTER (WHERE status LIKE '%40%' OR status LIKE '%50%'))::float / (COUNT(status))::float) * 100 AS fail_rate
+        FROM
+            date_and_status
+        GROUP BY
+            day
+    )
+
+    SELECT
         day,
-        ((COUNT(status) FILTER (WHERE status LIKE '%40%' OR status LIKE '%50%'))::float / (COUNT(status))::float) * 100 AS fail_rate
-        FROM date_and_status
-        GROUP BY day
-        ORDER BY fail_rate DESC
-        LIMIT 5
+        fail_rate
+    FROM
+        result
+    WHERE
+        fail_rate >= 1
+    ORDER BY
+        fail_rate DESC
+    LIMIT
+        10
     """)
 
     output = cur.fetchall()
-    print(output)
     for entry in output:
         print('%s' % entry[0], ' -- ', round(float(entry[1]), 2), '% errors', sep='')
     
