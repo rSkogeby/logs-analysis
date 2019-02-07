@@ -10,10 +10,7 @@ import psycopg2
 DB = 'news'
 
 
-def main():
-    conn = psycopg2.connect(database=DB)
-    cur = conn.cursor()
-    print()
+def print_most_read_articles(cur):
     """Reports the most popular articles of all times."""
     print('Most read articles:')
     cur.execute("""SELECT articles.title, COUNT(log.path) as num
@@ -27,6 +24,9 @@ def main():
     for entry in output:
         print('\"%s\"' % entry[0], '\u2014', entry[1], 'views')
     print()
+    
+
+def print_most_read_authors(cur):
     """Reports the most popular author of all times."""
     print('Most read authors:')
     cur.execute("""SELECT authors.name, COUNT(log.path) as num
@@ -42,6 +42,8 @@ def main():
     for entry in output:
         print('\"%s\"' % entry[0], '\u2014', entry[1], 'views')
     print()
+
+def print_days_with_most_errors(cur):
     """Days with more than 1% of requests resulting in errors"""
     print('Errors:')
     cur.execute("""
@@ -78,6 +80,15 @@ def main():
     for entry in output:
         print('%s' % entry[0], ' \u2014 ', round(float(entry[1]), 2), ...
               '% errors', sep='')
+
+
+def main():
+    # Connect to database
+    conn = psycopg2.connect(database=DB)
+    cur = conn.cursor()
+    print_most_read_articles(cur)
+    print_most_read_authors(cur)
+    print_days_with_most_errors(cur)    
     conn.close()
 
 
