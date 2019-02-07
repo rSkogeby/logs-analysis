@@ -1,8 +1,4 @@
-"""Logs Analysis
-Answers:
-What are the most popular articles of all time?
-Who are the most popular authors of all time?
-On which days did more than 1% of requests lead to errors?
+"""Logs Analysis for extracting key facts out of a news site's database.
 """
 
 import psycopg2
