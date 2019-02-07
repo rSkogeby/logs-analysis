@@ -24,7 +24,7 @@ def print_most_read_articles(cur):
     for entry in output:
         print('\"%s\"' % entry[0], '\u2014', entry[1], 'views')
     print()
-    
+
 
 def print_most_read_authors(cur):
     """Reports the most popular author of all times."""
@@ -37,11 +37,11 @@ def print_most_read_authors(cur):
         ORDER BY num DESC
         LIMIT 4
     """)
-
     output = cur.fetchall()
     for entry in output:
         print('\"%s\"' % entry[0], '\u2014', entry[1], 'views')
     print()
+
 
 def print_days_with_most_errors(cur):
     """Days with more than 1% of requests resulting in errors"""
@@ -78,7 +78,7 @@ def print_days_with_most_errors(cur):
     """)
     output = cur.fetchall()
     for entry in output:
-        print('%s' % entry[0], ' \u2014 ', round(float(entry[1]), 2), ...
+        print('%s' % entry[0], ' \u2014 ', round(float(entry[1]), 2),
               '% errors', sep='')
 
 
@@ -88,7 +88,7 @@ def main():
     cur = conn.cursor()
     print_most_read_articles(cur)
     print_most_read_authors(cur)
-    print_days_with_most_errors(cur)    
+    print_days_with_most_errors(cur)
     conn.close()
 
 
