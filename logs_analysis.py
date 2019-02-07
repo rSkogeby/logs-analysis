@@ -39,7 +39,6 @@ def most_read_authors(cur):
     output = cur.fetchall()
     for entry in output:
         yield ['\"%s\"' % entry[0], '\u2014', '%s' % entry[1], 'views']
-    
 
 
 def days_with_most_errors(cur):
@@ -78,7 +77,7 @@ def days_with_most_errors(cur):
     output = cur.fetchall()
     for entry in output:
         yield ['%s' % entry[0], ' \u2014 ', '%s' % round(float(entry[1]), 2),
-              '% errors']
+               '% errors']
 
 
 def main():
