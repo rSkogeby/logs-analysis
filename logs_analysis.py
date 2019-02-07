@@ -79,12 +79,15 @@ def days_with_most_errors(cur):
 def main():
     conn = psycopg2.connect(database=DB)
     cur = conn.cursor()
+    # Get generator for most read articles and print them out
     art_gen = most_read_articles(cur)
     for article in art_gen:
         print(' '.join(article))
+    # And for most read author
     auth_gen = most_read_authors(cur)
     for author in auth_gen:
         print(' '.join(author))
+    # And for days with more than 1% errors
     err_gen = days_with_most_errors(cur)
     for error in err_gen:
         print(''.join(error))
