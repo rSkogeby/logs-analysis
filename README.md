@@ -1,5 +1,6 @@
 # Logs Analysis
 
+App that generates a log of key stats from visits to a news site. 
 
 ## About
 Logs Analysis is a Python tool for exploring a large database with over a million rows through PostgreSQL queries, allowing to draw business conclusions from the data. The project mimics building an internal reporting tool for a newspaper site to discover what kind of articles the site's readers like. The database contains newspaper articles, information about their authors, as well as visitor logs for the website.
