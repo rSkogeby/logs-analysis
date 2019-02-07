@@ -10,9 +10,9 @@ import psycopg2
 DB = 'news'
 
 
-def print_most_read_articles(cur):
+def most_read_articles(cur):
     """Reports the most popular articles of all times."""
-    print('Most read articles:')
+    print('\n', 'Most read articles:')
     cur.execute("""SELECT articles.title, COUNT(log.path) as num
         FROM log, articles
         WHERE log.path LIKE '%' || articles.slug || '%'
@@ -22,13 +22,12 @@ def print_most_read_articles(cur):
     """)
     output = cur.fetchall()
     for entry in output:
-        print('\"%s\"' % entry[0], '\u2014', entry[1], 'views')
-    print()
+        yield ['\"%s\"' % entry[0], '\u2014', '%s' % entry[1], 'views']
 
 
-def print_most_read_authors(cur):
+def most_read_authors(cur):
     """Reports the most popular author of all times."""
-    print('Most read authors:')
+    print('\n', 'Most read authors:')
     cur.execute("""SELECT authors.name, COUNT(log.path) as num
         FROM log, articles, authors
         WHERE log.path LIKE '%' || articles.slug || '%'
@@ -39,13 +38,13 @@ def print_most_read_authors(cur):
     """)
     output = cur.fetchall()
     for entry in output:
-        print('\"%s\"' % entry[0], '\u2014', entry[1], 'views')
-    print()
+        yield ['\"%s\"' % entry[0], '\u2014', '%s' % entry[1], 'views']
+    
 
 
-def print_days_with_most_errors(cur):
+def days_with_most_errors(cur):
     """Days with more than 1% of requests resulting in errors"""
-    print('Errors:')
+    print('\n', 'Errors:')
     cur.execute("""
     WITH result AS (
         WITH date_and_status AS (
@@ -78,18 +77,23 @@ def print_days_with_most_errors(cur):
     """)
     output = cur.fetchall()
     for entry in output:
-        print('%s' % entry[0], ' \u2014 ', round(float(entry[1]), 2),
-              '% errors', sep='')
+        yield ['%s' % entry[0], ' \u2014 ', '%s' % round(float(entry[1]), 2),
+              '% errors']
 
 
 def main():
-    # Connect to database
     conn = psycopg2.connect(database=DB)
     cur = conn.cursor()
-    print_most_read_articles(cur)
-    print_most_read_authors(cur)
-    print_days_with_most_errors(cur)
-    conn.close()
+    art_gen = most_read_articles(cur)
+    for article in art_gen:
+        print(' '.join(article))
+    auth_gen = most_read_authors(cur)
+    for author in auth_gen:
+        print(' '.join(author))
+    err_gen = days_with_most_errors(cur)
+    for error in err_gen:
+        print(''.join(error))
+        conn.close()
 
 
 if __name__ == "__main__":
