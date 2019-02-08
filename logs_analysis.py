@@ -7,7 +7,7 @@ DB = 'news'
 
 
 def most_read_articles(cur):
-    """Reports the most popular articles of all times."""
+    """Report the most popular articles of all times."""
     print('\n', 'Most read articles:')
     cur.execute("""SELECT articles.title, COUNT(log.path) as num
         FROM log, articles
@@ -22,7 +22,7 @@ def most_read_articles(cur):
 
 
 def most_read_authors(cur):
-    """Reports the most popular author of all times."""
+    """Report the most popular author of all times."""
     print('\n', 'Most read authors:')
     cur.execute("""SELECT authors.name, COUNT(log.path) as num
         FROM log, articles, authors
@@ -38,7 +38,7 @@ def most_read_authors(cur):
 
 
 def days_with_most_errors(cur):
-    """Days with more than 1% of requests resulting in errors"""
+    """Report days with more than 1% of requests resulting in errors."""
     print('\n', 'Errors:')
     cur.execute("""
     WITH result AS (
@@ -77,6 +77,7 @@ def days_with_most_errors(cur):
 
 
 def main():
+    """Query a database DB and print the result."""
     conn = psycopg2.connect(database=DB)
     cur = conn.cursor()
     # Get generator for most read articles and print them out
