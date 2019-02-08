@@ -24,14 +24,41 @@ The reporting tool was made to analyse a database 'news', with three tables cont
 Each question is answered in a separate appropriately named function through a single select query to the database. The function returns a generator object from which a list containing a formatted string is acquired upon iteration. The list is then joined in main() before being printed to the terminal.
 
 ## Usage
-
-```bash
+Install Vagrant. Clone this repository into your vagrant directory. Download the newsdata.zip file and extract its contents into vagrant/logs-analysis diretory. cd into  vagrant/logs-analysis and run
+``` bash
 vagrant up
 vagrant ssh
+```
+In Vagrant run
+
+``` bash
+cd /vagrant/logs-analysis
+```
+
+To set up the database run
+
+``` bash
+psql -d news -f newsdata.sql
+```
+
+Install the PostgreSQL library for Python 3:
+
+``` bash
 pip3 install psycopg2-binary
+```
+
+Run the program through
+
+``` bash
 python3 logs_analysis.py
 ```
 
+or by 
+
+``` bash
+chmod +x logs_analysis.py
+./logs_analysis.py
+```
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
