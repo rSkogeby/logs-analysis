@@ -19,7 +19,7 @@ def most_read_articles(cur):
     """)
     output = cur.fetchall()
     for title, views in output:
-        yield '"{}" - {} views'.format(title, views)
+        yield '"{}" \u2014 {} views'.format(title, views)
 
 
 def most_read_authors(cur):
@@ -28,15 +28,15 @@ def most_read_authors(cur):
     cur.execute("""
     SELECT authors.name, COUNT(log.path) as num
         FROM log, articles, authors
-        WHERE log.path LIKE '%' || articles.slug || '%'
+        WHERE log.path = '/article/' || articles.slug
         AND articles.author = authors.id
         GROUP BY authors.name
         ORDER BY num DESC
         LIMIT 4
     """)
     output = cur.fetchall()
-    for entry in output:
-        yield ['\"%s\"' % entry[0], '\u2014', '%s' % entry[1], 'views']
+    for author, views in output:
+        yield '{} \u2014 {} views'.format(author, views)
 
 
 def days_with_most_errors(cur):
@@ -87,9 +87,9 @@ def main():
     for article in art_gen:
         print(article)
     # And for most read author
-    #auth_gen = most_read_authors(cur)
-    #for author in auth_gen:
-    #    print(' '.join(author))
+    auth_gen = most_read_authors(cur)
+    for author in auth_gen:
+        print(author)
     # And for days with more than 1% errors
     #err_gen = days_with_most_errors(cur)
     #for error in err_gen:
