@@ -18,8 +18,8 @@ def most_read_articles(cur):
         LIMIT 3
     """)
     output = cur.fetchall()
-    for entry in output:
-        yield ['\"%s\"' % entry[0], '\u2014', '%s' % entry[1], 'views']
+    for title, views in output:
+        yield '"{}" - {} views'.format(title, views)
 
 
 def most_read_authors(cur):
@@ -85,7 +85,7 @@ def main():
     # Get generator for most read articles and print them out
     art_gen = most_read_articles(cur)
     for article in art_gen:
-        print(' '.join(article))
+        print(article)
     # And for most read author
     #auth_gen = most_read_authors(cur)
     #for author in auth_gen:
