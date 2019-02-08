@@ -12,7 +12,7 @@ def most_read_articles(cur):
     cur.execute("""
     SELECT articles.title, COUNT(log.path) as num
         FROM log, articles
-        WHERE log.path LIKE '%' || articles.slug || '%'
+        WHERE log.path = '/article/' || articles.slug
         GROUP BY articles.title
         ORDER BY num DESC
         LIMIT 3
