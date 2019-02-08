@@ -46,7 +46,7 @@ def days_with_most_errors(cur):
     WITH result AS (
         WITH date_and_status AS (
             SELECT
-                TO_CHAR(log.time::date, 'FMMonth dd, yyyy') AS day,
+                log.time::date AS day,
                 log.status as status
             FROM
                 log
@@ -61,7 +61,7 @@ def days_with_most_errors(cur):
             day
     )
     SELECT
-        day,
+        TO_CHAR(day, 'FMMonth dd, yyyy'),
         fail_rate
     FROM
         result
@@ -91,10 +91,10 @@ def main():
     for author in auth_gen:
         print(author)
     # And for days with more than 1% errors
-    #err_gen = days_with_most_errors(cur)
-    #for error in err_gen:
-    #    print(''.join(error))
-    #conn.close()
+    err_gen = days_with_most_errors(cur)
+    for error in err_gen:
+        print(''.join(error))
+    conn.close()
 
 
 if __name__ == "__main__":
