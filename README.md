@@ -25,12 +25,12 @@ The reporting tool was made to analyse a database 'news', with three tables cont
 Each question is answered in a separate appropriately named function through a single select query to the database. The function returns a generator object from which a list containing a formatted string is acquired upon iteration. The list is then joined in main() before being printed to the terminal.
 
 ## Usage
-Install Vagrant. Clone this repository into your vagrant directory. Download the newsdata.zip file and extract its contents into vagrant/logs-analysis diretory. cd into  vagrant/logs-analysis and run
+Install Vagrant and VirtualBox. Download the VM Configuration. Clone this logs-analysis into the FSND-Virtual-Machine/vagrant directory from the VM Configuration. Download the newsdata.zip file and extract its contents into the logs-analysis diretory. cd into  FSND-Virtual-Machine/vagrant and run
 ``` bash
 vagrant up
 vagrant ssh
 ```
-In Vagrant run
+When successfully connected to Vagrant run
 
 ``` bash
 cd /vagrant/logs-analysis
