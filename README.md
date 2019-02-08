@@ -9,8 +9,8 @@ Logs Analysis is a Python tool for exploring a large database with over a millio
 
 - Python 3
 - The psycopg2 Python 3 library
-- Vagrant
-- [Virtualbox version 5.1](https://www.virtualbox.org/wiki/Download_Old_Builds_5_1)
+- [Vagrant](https://www.vagrantup.com/downloads.html)
+- [VirtualBox version 5.1](https://www.virtualbox.org/wiki/Download_Old_Builds_5_1)
 - [newsdata.zip](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip) 
 
 ## Design
