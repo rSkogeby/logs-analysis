@@ -91,7 +91,7 @@ def main():
     err_gen = days_with_most_errors(cur)
     for error in err_gen:
         print(''.join(error))
-        conn.close()
+    conn.close()
 
 
 if __name__ == "__main__":
