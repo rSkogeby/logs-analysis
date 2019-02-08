@@ -1,5 +1,5 @@
-"""Logs Analysis for extracting key facts out of a news site's database.
-"""
+#!/usr/bin/env python3
+"""Logs Analysis for extracting key facts out of a news site's database."""
 
 import psycopg2
 
@@ -84,14 +84,14 @@ def main():
     for article in art_gen:
         print(' '.join(article))
     # And for most read author
-    auth_gen = most_read_authors(cur)
-    for author in auth_gen:
-        print(' '.join(author))
+    #auth_gen = most_read_authors(cur)
+    #for author in auth_gen:
+    #    print(' '.join(author))
     # And for days with more than 1% errors
-    err_gen = days_with_most_errors(cur)
-    for error in err_gen:
-        print(''.join(error))
-    conn.close()
+    #err_gen = days_with_most_errors(cur)
+    #for error in err_gen:
+    #    print(''.join(error))
+    #conn.close()
 
 
 if __name__ == "__main__":
