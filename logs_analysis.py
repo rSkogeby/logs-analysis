@@ -9,7 +9,8 @@ DB = 'news'
 def most_read_articles(cur):
     """Report the most popular articles of all times."""
     print('\n', 'Most read articles:')
-    cur.execute("""SELECT articles.title, COUNT(log.path) as num
+    cur.execute("""
+    SELECT articles.title, COUNT(log.path) as num
         FROM log, articles
         WHERE log.path LIKE '%' || articles.slug || '%'
         GROUP BY articles.title
@@ -24,7 +25,8 @@ def most_read_articles(cur):
 def most_read_authors(cur):
     """Report the most popular author of all times."""
     print('\n', 'Most read authors:')
-    cur.execute("""SELECT authors.name, COUNT(log.path) as num
+    cur.execute("""
+    SELECT authors.name, COUNT(log.path) as num
         FROM log, articles, authors
         WHERE log.path LIKE '%' || articles.slug || '%'
         AND articles.author = authors.id
