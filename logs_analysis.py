@@ -73,9 +73,8 @@ def days_with_most_errors(cur):
         10
     """)
     output = cur.fetchall()
-    for entry in output:
-        yield ['%s' % entry[0], ' \u2014 ', '%s' % round(float(entry[1]), 2),
-               '% errors']
+    for date, fail_rate in output:
+        yield '{} \u2014 {}% errors'.format(date, round(float(fail_rate), 2))
 
 
 def main():
@@ -93,7 +92,7 @@ def main():
     # And for days with more than 1% errors
     err_gen = days_with_most_errors(cur)
     for error in err_gen:
-        print(''.join(error))
+        print(error)
     conn.close()
 
 
