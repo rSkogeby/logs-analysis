@@ -53,8 +53,7 @@ def days_with_most_errors(cur):
         )
         SELECT
             day,
-            ((COUNT(status) FILTER (WHERE status LIKE '%40%' OR status
-            LIKE '%50%'))::float / (COUNT(status))::float) * 100 AS fail_rate
+            ((COUNT(status) FILTER (WHERE status != '200 OK'))::float / (COUNT(status))::float) * 100 AS fail_rate
         FROM
             date_and_status
         GROUP BY
