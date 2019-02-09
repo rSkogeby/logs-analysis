@@ -25,12 +25,20 @@ The reporting tool was made to analyse a database 'news', with three tables cont
 Each question is answered in a separate appropriately named function through a single select query to the database. The function returns a generator object from which a list containing a formatted string is acquired upon iteration. The list is then joined in main() before being printed to the terminal.
 
 ## Usage
-Install Vagrant and VirtualBox. Download the VM Configuration. Clone this logs-analysis into the FSND-Virtual-Machine/vagrant directory from the VM Configuration. Download the newsdata.zip file and extract its contents into the logs-analysis diretory. cd into  FSND-Virtual-Machine/vagrant and run
+Install Vagrant and VirtualBox. Download the VM Configuration. Clone this logs-analysis into the FSND-Virtual-Machine/vagrant directory from the VM Configuration. Download the newsdata.zip file and extract its contents into the logs-analysis diretory. 
+
+In order to have the VM configured with PostgreSQL and the needed Python modules cd into  FSND-Virtual-Machine/vagrant where you have your Vagrantfile and run
+
 ``` bash
 vagrant up
+```
+You can then proceed to run
+
+``` bash
 vagrant ssh
 ```
-When successfully connected to Vagrant run
+
+to connect to Vagrant from the terminal. When successfully connected to Vagrant run
 
 ``` bash
 cd /vagrant/logs-analysis
